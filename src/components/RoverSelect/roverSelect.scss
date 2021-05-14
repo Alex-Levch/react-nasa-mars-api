@@ -1,3 +1,35 @@
+$duration: 0.3s;
+
 .rovers {
+  padding-bottom: 10px;
+
+  &__select {
+  font-weight: 600;
+  font-size: 20px;
+  border-radius: 6px;
+  background-color: rgb(145, 167, 124);
+
+  transition: transform $duration;
+  transition: background-color $duration;
+  transition: opacity $duration;
+  transition: transform $duration;
+
+    &:focus {
+      outline: none;
+      transform: scale(1.01);
+      background-color: rgb(101, 131, 74);
+      opacity: 0.8;
+      color: rgb(246, 247, 245);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(100, 128, 74);
+    }
+  }
+
+  &__option {
+
+  }
 
 }

@@ -3,42 +3,56 @@ import PropTypes from 'prop-types';
 
 import './camerasSelect.scss';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { useStyles } from '../RoverSelect';
+
 export const CamerasSelect = ({
   cameras,
   filterByCamerasName,
   selectedCamera,
-}) => (
+}) => {
+  const classes = useStyles()
+
+  return (
   <div className="cameras">
-    <select
-      // eslint-disable-next-line react/prop-types
-      value={selectedCamera.name}
-      defaultValue="Choose Camera"
-      name=""
-      id=""
-      className="cameras__select"
-      onChange={filterByCamerasName}
-    >
-      <option
-        value="Choose Camera"
-        className="cameras__option"
-        disabled
-      >
-        Choose Camera
-      </option>
-      {cameras.map(camera => (
-        <option
-          key={camera.id}
-          value={camera.name}
-          className="cameras__option"
-        >
-          {camera.name}
-        </option>
-
-      ))}
-    </select>
+    <FormControl variant="outlined" className={classes.formControl }>
+          <InputLabel
+            htmlFor="outlined-age-native-simple"
+            className={classes.colorStyle}
+          >
+            Camera
+          </InputLabel>
+          <Select
+            className={classes.bgcStyle}
+            native
+            value={selectedCamera.name}
+            onChange={filterByCamerasName}
+            defaultValue="Choose camera"
+            label="Camera"
+            inputProps={{
+              name: 'rover',
+              id: 'outlined-age-native-simple',
+            }}
+          >
+            <option
+              aria-label="None" value=""
+              className="cameras__option"
+            />
+            {cameras.map(camera => (
+              <option
+                key={camera.id}
+                value={camera.name}
+              >
+                {camera.name}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
   </div>
-);
-
+  );
+}
 CamerasSelect.propTypes = {
   cameras: PropTypes.arrayOf(
     PropTypes.shape({

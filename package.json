@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
+    "bootstrap": "^5.0.1",
     "ky": "^0.28.0",
     "prop-types": "^15.7.2",
     "qs": "^6.5.2",

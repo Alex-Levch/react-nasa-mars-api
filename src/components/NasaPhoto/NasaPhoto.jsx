@@ -2,9 +2,9 @@ import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { urls } from '../api/api';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+
+// import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -22,7 +22,11 @@ export const NasaPhoto = ({
   setSolRange,
 }) => {
   const [photoData, setPhotoData] = useState([]);
-  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [offSet, setOffset] = useState(0);
+  const [photoLimit, setPhotoLimit] = useState(4);
+  // const [minPhotoLimit, setMinPhotoLimit] = useState(1);
+  // const [loading, setLoading] = useState(false);
+
 
   const { baseUrl, token } = urls;
   let rover = '';
@@ -42,33 +46,11 @@ export const NasaPhoto = ({
       setPhotoData(data.photos);
     }
 
-    setSelectedRover({});
-    setSelectedCamera({});
-    // setSolRange('1');
   };
 
   useEffect(() => {
     fetchPhoto();
   }, []);
-
-  // const handleKeyUp = () => {
-  //   const keyActionMap = {
-  //     ArrowLeft: this.selectPreviousPhoto.bind(this),
-  //     ArrowRight: this.selectNextPhoto.bind(this),
-  //     Space: this.handlePauseClick.bind(this)
-  //   }
-
-  //   const action = keyActionMap[event.code];
-
-  //   if (action) {
-  //     event.preventDefault();
-  //     action()
-  //   };
-  // };
-
-  // const selectPreviousPhoto = () => {
-
-  // };
 
   const reducer = (count, action) => {
     switch (action.type) {
@@ -88,57 +70,60 @@ export const NasaPhoto = ({
   const decrease = () => dispatch({ type: 'decrease'})
   const increase = () => dispatch({ type: 'increase'})
 
-  console.log(count);
-
-  // console.log(photoData);
-
-  // if (!photoData) {
-  //   return (
-  //     <div>
-  //       Loading...
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="photo">
       <div className="photo__download-block">
-        <button
-          className="photo__download-btn"
-          type="button"
+        <Button
+          variant="contained"
+          color="primary"
           onClick={fetchPhoto}
         >
           Download Photo
-        </button>
-        <div className="photo__download-icon">
           <PhotoCamera/>
-        </div>
+        </Button>
       </div>
-        <button
-          type="button"
-          onClick={decrease}
-          disabled={count === 0}
-        >
-          -
-        </button>
-        <button
-          type="button"
-          onClick={increase}
-          disabled={count === photoData.length}
-        >
-          +
-        </button>
+        <div className="photo__buttons">
+          <button
+            type="button"
+            onClick={decrease}
+            disabled={count === 0}
+            className="photo__btn btn-decrease"
+          >
+            <ArrowBackIosIcon />
+          </button>
+          <button
+            type="button"
+            onClick={increase}
+            disabled={count === photoData.length - 1}
+            className="photo__btn btn-increase"
+          >
+            <ArrowForwardIosIcon />
+          </button>
+        </div>
       {!photoData.length && (
-        <h2>
+        <h2 className="photo__title-loading">
           No photos, try another camera
         </h2>
       )}
       {photoData.length > 1 && (
-        <div className="photo">
-          <h2>
+        <div className="photo__container">
+          <h2 className="photo__title-count">
             {`${count + 1} / ${photoData.length}`}
           </h2>
-          <img src={photoData[count].img_src} alt="rover photo" />
+          <img
+            className="photo__img"
+            src={photoData[count].img_src}
+            alt="rover photo"
+          />
+          {/* <div class="photo__btn-load">
+            <Button
+              variant="contained"
+              color="primary"
+              // onClick={}
+            >
+              Load more
+            </Button>
+          </div> */}
         </div>
       )}
     </div>

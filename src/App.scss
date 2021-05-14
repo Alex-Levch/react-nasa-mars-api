@@ -10,7 +10,6 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
   color: #fff;
-  display: grid;
 
   &__logo {
     position: absolute;
@@ -23,7 +22,14 @@ body {
 
   &__title {
     margin-left: 100px;
+    margin-bottom: 50px;
     font-weight: 700;
     color: #154595;
+  }
+
+  &__selects {
+    padding-left: 10px;
+    height: 100px;
+    width: 250px;
   }
 }

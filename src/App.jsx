@@ -41,41 +41,37 @@ export const App = () => {
     setSolRange(target.value);
   };
 
-  // console.log(rovers);
-  console.log(selectedRover);
-  // console.log(cameras);
-  // console.log(selectedCamera);
-  // console.log(solRange);
-
   return (
     <div className="app">
       <h1 className="app__title">
         NASA APIs
       </h1>
       <div className="app__logo" />
-      <RoverSelect
-        filterByRoverName={filterByRoverName}
-        selectedRover={selectedRover}
-        rovers={rovers}
-      />
-      <CamerasSelect
-        filterByCamerasName={filterByCamerasName}
-        selectedCamera={selectedCamera}
-        cameras={cameras}
-      />
-      <SolRange
-        selectSolDays={selectSolDays}
-        solRange={solRange}
-        selectedRover={selectedRover}
-      />
+      <div className="app__selects">
+        <RoverSelect
+          filterByRoverName={filterByRoverName}
+          selectedRover={selectedRover}
+          rovers={rovers}
+        />
+        <CamerasSelect
+          filterByCamerasName={filterByCamerasName}
+          selectedCamera={selectedCamera}
+          cameras={cameras}
+        />
+        <SolRange
+          selectSolDays={selectSolDays}
+          solRange={solRange}
+          selectedRover={selectedRover}
+        />
+      </div>
       <NasaPhoto
-        selectedRover={selectedRover}
-        selectedCamera={selectedCamera}
-        solRange={solRange}
-        setSelectedRover={setSelectedRover}
-        setSelectedCamera={setSelectedCamera}
-        setSolRange={setSolRange}
-      />
+          selectedRover={selectedRover}
+          selectedCamera={selectedCamera}
+          solRange={solRange}
+          setSelectedRover={setSelectedRover}
+          setSelectedCamera={setSelectedCamera}
+          setSolRange={setSolRange}
+        />
     </div>
   );
 };
