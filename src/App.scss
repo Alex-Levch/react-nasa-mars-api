@@ -1,3 +1,29 @@
-.starter {
+body {
+  background: url("./images/NASA_bgc.jpg");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
+  color: #fff;
+  display: grid;
+
+  &__logo {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 100px;
+    background: url('./images/favicon-192.png') no-repeat;
+    background-size: contain;
+  }
+
+  &__title {
+    margin-left: 100px;
+    font-weight: 700;
+    color: #154595;
+  }
 }
