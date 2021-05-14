@@ -42,6 +42,7 @@ export const CamerasSelect = ({
             />
             {cameras.map(camera => (
               <option
+              className="cameras__option"
                 key={camera.id}
                 value={camera.name}
               >

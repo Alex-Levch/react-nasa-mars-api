@@ -13,7 +13,7 @@ export const SolRange = ({
     <div className="sol-range">
       <label
         htmlFor="rangeId"
-        className=""
+        className="sol-range__label"
       >
         Choose sol:
       </label>
