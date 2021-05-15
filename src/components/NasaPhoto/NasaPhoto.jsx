@@ -39,22 +39,6 @@ export const NasaPhoto = ({
 
   const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
 
-  const fetchPhoto = async() => {
-    if (rover && camera) {
-      const response = await fetch(totalUrl);
-      const data = await response.json();
-      setPhotoData(data.photos);
-    }
-
-    setSelectedRover({});
-    setSelectedCamera({});
-    setSolRange('1');
-  };
-
-  useEffect(() => {
-    fetchPhoto();
-  }, []);
-
   const reducer = (count, action) => {
     switch (action.type) {
       case 'increase':
@@ -62,6 +46,9 @@ export const NasaPhoto = ({
 
       case 'decrease':
         return count - 1;
+
+        case 'reset':
+          return count = 0;
 
       default:
         return count;
@@ -72,6 +59,24 @@ export const NasaPhoto = ({
 
   const decrease = () => dispatch({ type: 'decrease'})
   const increase = () => dispatch({ type: 'increase'})
+  const reset = () => dispatch({ type: 'reset'})
+
+  const fetchPhoto = async() => {
+    if (rover && camera) {
+      const response = await fetch(totalUrl);
+      const data = await response.json();
+      setPhotoData(data.photos);
+    }
+
+    setSelectedRover({});
+    setSelectedCamera({});
+    setSolRange('1');
+    reset();
+  };
+
+  useEffect(() => {
+    fetchPhoto();
+  }, []);
 
   return (
     <div className="photo">
