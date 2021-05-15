@@ -18,39 +18,45 @@ export const CamerasSelect = ({
   return (
   <div className="cameras">
     <FormControl variant="outlined" className={classes.formControl }>
-          <InputLabel
-            htmlFor="outlined-age-native-simple"
-            className={classes.colorStyle}
+      <InputLabel
+        htmlFor="outlined-age-native-simple"
+        className={classes.colorStyle}
+      >
+        Camera
+      </InputLabel>
+      <Select
+        className={classes.bgcStyle}
+        native
+        value={selectedCamera.hasOwnProperty('name')
+            ? selectedCamera.name
+            : "Choose camera"
+            }
+        onChange={filterByCamerasName}
+        defaultValue="Choose camera"
+        label="Camera"
+        inputProps={{
+          name: 'rover',
+          id: 'outlined-age-native-simple',
+        }}
+      >
+        <option
+          disabled
+          aria-label="None" value="Choose camera"
+          className="cameras__option"
+        >
+          Choose camera
+        </option>
+        {cameras.map(camera => (
+          <option
+          className="cameras__option"
+            key={camera.id}
+            value={camera.name}
           >
-            Camera
-          </InputLabel>
-          <Select
-            className={classes.bgcStyle}
-            native
-            value={selectedCamera.name}
-            onChange={filterByCamerasName}
-            defaultValue="Choose camera"
-            label="Camera"
-            inputProps={{
-              name: 'rover',
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option
-              aria-label="None" value=""
-              className="cameras__option"
-            />
-            {cameras.map(camera => (
-              <option
-              className="cameras__option"
-                key={camera.id}
-                value={camera.name}
-              >
-                {camera.name}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+            {camera.name}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   </div>
   );
 }

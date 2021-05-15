@@ -5,10 +5,8 @@ import './roverSelect.scss';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 
 export const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -19,13 +17,15 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   colorStyle: {
-    color: '#bbdefb',
+    color: '#fff',
+    fontWeight: 600,
+    textShadow: '0 0 15px',
   },
   borderStyle: {
     border: '2px solid #bbdefb'
   },
   bgcStyle: {
-    backgroundColor: '#3e2723'
+    backgroundColor: '#388e3c'
   }
 }));
 
@@ -45,8 +45,12 @@ export const RoverSelect = ({ selectedRover, filterByRoverName, rovers }) => {
           <Select
             className={classes.bgcStyle}
             native
-            value={selectedRover.name}
+            value={selectedRover.hasOwnProperty('name')
+            ? selectedRover.name
+            : "Choose rover"
+            }
             onChange={filterByRoverName}
+            defaultValue="Choose rover"
             label="Rover"
             inputProps={{
               name: 'rover',
@@ -54,9 +58,12 @@ export const RoverSelect = ({ selectedRover, filterByRoverName, rovers }) => {
             }}
           >
             <option
-              aria-label="None" value=""
+              disabled
+              aria-label="None" value="Choose rover"
               className="rovers__option"
-            />
+            >
+              Choose rover
+            </option>
             {rovers.map(rover => (
               <option
                 key={rover.id}

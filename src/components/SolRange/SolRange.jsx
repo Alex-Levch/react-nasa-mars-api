@@ -19,16 +19,20 @@ export const SolRange = ({
       </label>
       <input
         min="1"
-        max={selectedRover.max_sol}
+        max={
+          selectedRover.hasOwnProperty('max_sol')
+          ? selectedRover.max_sol
+          : '1'
+        }
         type="range"
         className="sol-range__field"
         id="rangeId"
         defaultValue={solRange}
         onChange={selectSolDays}
       />
-      <span className="sol-range__text">
+      <p className="sol-range__text">
         {solRange}
-      </span>
+      </p>
     </div>
   );
 };

@@ -28,7 +28,10 @@ export const App = () => {
     const currentRover = rovers.find(rover => rover.name === target.value);
 
     setSelectedRover(currentRover);
-    setCameras(currentRover.cameras);
+
+    if (currentRover) {
+      setCameras(currentRover.cameras);
+    }
   };
 
   const filterByCamerasName = ({ target }) => {

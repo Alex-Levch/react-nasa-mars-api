@@ -11,7 +11,7 @@
   &__download-block {
     position: absolute;
     left: 10px;
-    top: 350px;
+    top: 380px;
     width: 220px;
     border-radius: 20px;
   }
@@ -50,10 +50,8 @@
     cursor: pointer;
   }
 
-  .btn-decrease {
-  }
-
-  .btn-increase {
+  .btn-icon {
+    font-size: 36px;
   }
 
   &__title-loading {
@@ -63,8 +61,7 @@
   &__container {
     position: relative;
     top: -70px;
-    width: 400px;
-    height: 400px;
+
   }
 
   &__title-count {
@@ -73,8 +70,8 @@
   }
 
   &__img {
-    width: 100%;
     border-radius: 20px;
+    width: 400px;
   }
 
   &__btn-load {

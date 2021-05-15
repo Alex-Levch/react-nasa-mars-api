@@ -6,12 +6,10 @@ import Button from '@material-ui/core/Button';
 
 // import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 
 import './nasaPhoto.scss';
-
-// import { UrlContext } from '../context/UrlContext';
 
 export const NasaPhoto = ({
   selectedRover,
@@ -32,9 +30,11 @@ export const NasaPhoto = ({
   let rover = '';
   let camera = '';
 
-  if (selectedRover.hasOwnProperty('name') && selectedCamera.hasOwnProperty('name')) {
-    rover = selectedRover.name.toLowerCase();
-    camera = selectedCamera.name.toLowerCase()
+  if(selectedRover && selectedCamera) {
+    if (selectedRover.hasOwnProperty('name') && selectedCamera.hasOwnProperty('name')) {
+      rover = selectedRover.name.toLowerCase();
+      camera = selectedCamera.name.toLowerCase()
+    }
   }
 
   const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
@@ -46,6 +46,9 @@ export const NasaPhoto = ({
       setPhotoData(data.photos);
     }
 
+    setSelectedRover({});
+    setSelectedCamera({});
+    setSolRange('1');
   };
 
   useEffect(() => {
@@ -87,17 +90,17 @@ export const NasaPhoto = ({
             type="button"
             onClick={decrease}
             disabled={count === 0}
-            className="photo__btn btn-decrease"
+            className="photo__btn"
           >
-            <ArrowBackIosIcon />
+            <ArrowLeftIcon className="btn-icon" />
           </button>
           <button
             type="button"
             onClick={increase}
             disabled={count === photoData.length - 1}
-            className="photo__btn btn-increase"
+            className="photo__btn"
           >
-            <ArrowForwardIosIcon />
+            <ArrowRightIcon className="btn-icon" />
           </button>
         </div>
       {!photoData.length && (
@@ -112,7 +115,7 @@ export const NasaPhoto = ({
           </h2>
           <img
             className="photo__img"
-            src={photoData[count].img_src}
+            src={(photoData[count]) && photoData[count].img_src}
             alt="rover photo"
           />
           {/* <div class="photo__btn-load">
