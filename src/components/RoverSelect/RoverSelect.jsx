@@ -50,7 +50,6 @@ export const RoverSelect = ({ selectedRover, filterByRoverName, rovers }) => {
             : "Choose rover"
             }
             onChange={filterByRoverName}
-            defaultValue="Choose rover"
             label="Rover"
             inputProps={{
               name: 'rover',

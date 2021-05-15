@@ -32,7 +32,6 @@ export const CamerasSelect = ({
             : "Choose camera"
             }
         onChange={filterByCamerasName}
-        defaultValue="Choose camera"
         label="Camera"
         inputProps={{
           name: 'rover',
