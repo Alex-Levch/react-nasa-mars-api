@@ -18,6 +18,8 @@ body {
     width: 100px;
     background: url('./images/favicon-192.png') no-repeat;
     background-size: contain;
+    cursor: pointer;
+    animation: rotator 5s linear infinite;
   }
 
   &__title {
@@ -31,5 +33,14 @@ body {
     padding-left: 10px;
     height: 100px;
     width: 250px;
+  }
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
   }
 }

@@ -49,7 +49,7 @@ export const App = () => {
       <h1 className="app__title">
         NASA APIs
       </h1>
-      <div className="app__logo" />
+      <div className="app__logo"/>
       <div className="app__selects">
         <RoverSelect
           filterByRoverName={filterByRoverName}
