@@ -37,8 +37,11 @@ export const NasaPhoto = ({
     }
   }
 
-  const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}
-  &${camera}&${token}`;
+  const totalUrl
+    = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
+
+  // eslint-disable-next-line no-console
+  console.log(totalUrl);
 
   const [buttons, setButtons] = useState([]);
 
@@ -183,10 +186,10 @@ export const NasaPhoto = ({
 
 NasaPhoto.propTypes = {
   selectedRover: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }).isRequired,
   selectedCamera: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }).isRequired,
   solRange: PropTypes.string.isRequired,
 

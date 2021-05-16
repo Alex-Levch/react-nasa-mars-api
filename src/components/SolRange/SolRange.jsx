@@ -39,6 +39,6 @@ SolRange.propTypes = {
   solRange: PropTypes.string.isRequired,
   selectSolDays: PropTypes.func.isRequired,
   selectedRover: PropTypes.shape({
-    max_sol: PropTypes.number.isRequired,
+    max_sol: PropTypes.number,
   }).isRequired,
 };
