@@ -1,7 +1,8 @@
 
 .photo {
-  position: relative;
-  bottom: 100px;
+  position: absolute;
+  top: 122px;
+  left: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,8 +13,8 @@
 
   &__download-block {
     position: absolute;
-    left: -480px;
-    top: 260px;
+    left: -470px;
+    top: 280px;
     width: 220px;
     border-radius: 20px;
   }
@@ -70,7 +71,8 @@
   }
 
   &__title-loading {
-
+    font-size: 32px;
+    color: rgb(38, 163, 80);
   }
 
   &__container {

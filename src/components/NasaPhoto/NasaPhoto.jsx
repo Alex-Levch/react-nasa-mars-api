@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-prototype-builtins */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -37,13 +37,11 @@ export const NasaPhoto = ({
     }
   }
 
-  const totalUrl
-  = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
+  // eslint-disable-next-line max-len
+  const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}&camera=${camera}&${token}`;
 
   // eslint-disable-next-line no-console
   console.log(totalUrl);
-
-  const [buttons, setButtons] = useState([]);
 
   const fetchPhoto = async() => {
     if (rover && camera) {
@@ -57,7 +55,6 @@ export const NasaPhoto = ({
     setSelectedCamera({});
     setSolRange('1');
     reset();
-    setButtons([]);
   };
 
   useEffect(() => {
@@ -95,14 +92,29 @@ export const NasaPhoto = ({
     setPhotoNumber(prevValue => prevValue = Number(target.name) - 1);
   }
 
-  // const [buttonsPerPage, setButtonsPerPage] = useState(5);
+  const [currentButtons, setCurrentButton] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
+  const [buttons, setButtons] = useState([]);
 
   photoData.map((photo, index) => buttons.push(index + 1));
-  const currentButtons = buttons.slice(minButtonsLimit, maxButtonsLimit);
+
+  const paganationButton = () => {
+    setCurrentButton(buttons.slice(minButtonsLimit, maxButtonsLimit));
+  };
+
+  useMemo(() => {
+    paganationButton();
+  }, [photoNumber]);
+
+  // useEffect(() => {
+  //   paganationButton();
+  // }, [photoNumber]);
+
   // const [currentButtonnss, setCurrentButtonnss] = useState(currentButtons);
   // const lastButtons = (buttons[buttons.length - 1]) % buttonsLimit;
 
-  // console.log(currentButtonnss);
+  // console.log(currentButtons);
   // console.log(photoNumber);
   // console.log(minButtonsLimit);
   // console.log(maxButtonsLimit);
@@ -122,7 +134,7 @@ export const NasaPhoto = ({
       </div>
       {!photoData.length && (
         <h2 className="photo__title-loading">
-          No photos, try another camera
+          No photos, try another camera...
         </h2>
       )}
       {photoData.length > 1 && (
