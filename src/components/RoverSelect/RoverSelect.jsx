@@ -25,7 +25,8 @@ export const useStyles = makeStyles(theme => ({
     border: '2px solid #bbdefb',
   },
   bgcStyle: {
-    backgroundColor: '#388e3c',
+    backgroundColor: '#757575',
+    fontWeight: '600',
   },
 }));
 
@@ -61,12 +62,13 @@ export const RoverSelect = ({ selectedRover, filterByRoverName, rovers }) => {
             disabled
             aria-label="None"
             value="Choose rover"
-            className="rovers__option"
+            className={classes.optionColorStyle}
           >
             Choose rover
           </option>
           {rovers.map(rover => (
             <option
+              className="rovers__option"
               key={rover.id}
               value={rover.name}
             >

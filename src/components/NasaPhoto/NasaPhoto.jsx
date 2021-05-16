@@ -38,7 +38,7 @@ export const NasaPhoto = ({
   }
 
   const totalUrl
-    = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
+  = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
 
   // eslint-disable-next-line no-console
   console.log(totalUrl);
@@ -120,65 +120,67 @@ export const NasaPhoto = ({
           <PhotoCamera />
         </Button>
       </div>
-      <div className="photo__buttons">
-        <button
-          type="button"
-          onClick={decrease}
-          disabled={photoNumber === 0}
-          className="photo__btn photo__btn-left"
-        >
-          <ArrowLeftIcon className="photo__btn-icon" />
-        </button>
-        <button
-          type="button"
-          onClick={increase}
-          disabled={photoNumber === photoData.length - 1}
-          className="photo__btn photo__btn-right"
-        >
-          <ArrowRightIcon className="photo__btn-icon" />
-        </button>
-      </div>
       {!photoData.length && (
         <h2 className="photo__title-loading">
           No photos, try another camera
         </h2>
       )}
       {photoData.length > 1 && (
-        <div className="photo__container">
-          <div className="photo__buttons-row">
-            {currentButtons.map(number => (
-              <button
-                className={classNames('photo__btn-num', {
-                  photo__btn_active: photoNumber === number - 1,
-                })}
-                type="button"
-                key={number}
-                variant="contained"
-                color="primary"
-                name={number}
-                onClick={(event) => {
-                  setImg(event);
-                  event.stopPropagation();
-                }}
-              >
-                {number}
-              </button>
-            ))}
+        <>
+          <div className="photo__buttons">
+            <button
+              type="button"
+              onClick={decrease}
+              disabled={photoNumber === 0}
+              className="photo__btn photo__btn-left"
+            >
+              <ArrowLeftIcon className="photo__btn-icon" />
+            </button>
+            <button
+              type="button"
+              onClick={increase}
+              disabled={photoNumber === photoData.length - 1}
+              className="photo__btn photo__btn-right"
+            >
+              <ArrowRightIcon className="photo__btn-icon" />
+            </button>
           </div>
-          <h2 className="photo__title-count">
-            {`${photoNumber + 1} / ${photoData.length}`}
-          </h2>
-          <img
-            className="photo__img"
-            src={(photoData[photoNumber]) && photoData[photoNumber].img_src}
-            alt="rover"
-          />
-          {photoData[photoNumber] && (
-            <p className="photo__date">
-              {photoData[photoNumber].earth_date}
-            </p>
-          )}
-        </div>
+          <div className="photo__container">
+            <div className="photo__buttons-row">
+              {currentButtons.map(number => (
+                <button
+                  className={classNames('photo__btn-num', {
+                    photo__btn_active: photoNumber === number - 1,
+                  })}
+                  type="button"
+                  key={number}
+                  variant="contained"
+                  color="primary"
+                  name={number}
+                  onClick={(event) => {
+                    setImg(event);
+                    event.stopPropagation();
+                  }}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+            <h2 className="photo__title-count">
+              {`${photoNumber + 1} / ${photoData.length}`}
+            </h2>
+            <img
+              className="photo__img"
+              src={(photoData[photoNumber]) && photoData[photoNumber].img_src}
+              alt="rover"
+            />
+            {photoData[photoNumber] && (
+              <p className="photo__date">
+                {photoData[photoNumber].earth_date}
+              </p>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
