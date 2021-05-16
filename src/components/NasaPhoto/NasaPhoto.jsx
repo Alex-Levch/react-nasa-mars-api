@@ -5,24 +5,12 @@ import { urls } from '../api/api';
 
 import Button from '@material-ui/core/Button';
 
-// import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 
 import './nasaPhoto.scss';
 import { number } from 'prop-types';
-
-// import { makeStyles } from '@material-ui/core/styles';
-// import { Pagination } from '@material-ui/lab';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     '& > *': {
-//       marginTop: theme.spacing(2),
-//     },
-//   },
-// }));
 
 export const NasaPhoto = ({
   selectedRover,
@@ -32,14 +20,9 @@ export const NasaPhoto = ({
   setSelectedCamera,
   setSolRange,
 }) => {
-  // const classes = useStyles();
 
   const [photoData, setPhotoData] = useState([]);
   const [photoNumber, setPhotoNumber] = useState(1);
-  // const [offSet, setOffset] = useState(0);
-  // const [loading, setLoading] = useState(false);
-  // const [imgCount, setImgCount] = useState(0);
-  // const [buttons, setButtons] = useState([]);
 
   const { baseUrl, token } = urls;
   let rover = '';
@@ -94,10 +77,6 @@ export const NasaPhoto = ({
       setMinButtonsLimit(minButtonsLimit + buttonsLimit);
     }
 
-    // if (photoNumber + 1 === buttons[buttons.length -1]) {
-    //   setMaxButtonsLimit(minButtonsLimit + lastButtons);
-    //   setMinButtonsLimit(minButtonsLimit + buttonsLimit);
-    // }
   }
 
   const reset = () => {
@@ -114,34 +93,14 @@ export const NasaPhoto = ({
   const [buttons, setButtons] = useState([])
   photoData.map((photo, index) => buttons.push(index + 1));
   const currentButtons = buttons.slice(minButtonsLimit, maxButtonsLimit);
-  // const [currentButtonnss, setCurrentButtonnss] = useState(currentButtons);
+  const [currentButtonnss, setCurrentButtonnss] = useState(currentButtons);
   const lastButtons = (buttons[buttons.length - 1]) % buttonsLimit;
 
-
-  // for (let i = 1; i <= Math.ceil(photoData.length / buttonsPerPage); i++) {
-  //   buttons.push(i);
-  // }
-
-  // const indexOfLastItem = photoNumber * buttonsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - buttonsPerPage;
-
-  // if ((photoNumber + 2) === buttons[buttons.length - 1]) {
-  //   setMaxButtonsLimit(maxButtonsLimit + lastButtons);
-  // }
-
+  console.log(currentButtonnss);
   console.log(photoNumber);
   console.log(minButtonsLimit);
-  // console.log(maxButtonsLimit);
-  // console.log(minButtonsLimit + lastButtons);
-  // // console.log(buttons[buttons.length - 1]);
-  // console.log(lastButtons);
-  // console.log(maxButtonsLimit);
-  // console.log(currentButtons[currentButtons.length - 1]);
-
-  // console.log(minButtonsLimit);
-  // console.log(maxButtonsLimit);
-
-  //CHECKPOINT!!!
+  console.log(maxButtonsLimit);
+  console.log(minButtonsLimit + lastButtons);
 
   return (
     <div className="photo">
