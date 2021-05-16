@@ -3,7 +3,7 @@ import { getRovers } from './components/api/api';
 import { RoverSelect } from './components/RoverSelect';
 import { CamerasSelect } from './components/CamerasSelect';
 import { SolRange } from './components/SolRange';
-import { NasaPhoto } from './components/NasaPhoto/';
+import { NasaPhoto } from './components/NasaPhoto';
 
 import './app.scss';
 
@@ -49,7 +49,7 @@ export const App = () => {
       <h1 className="app__title">
         NASA APIs
       </h1>
-      <div className="app__logo"/>
+      <div className="app__logo" />
       <div className="app__selects">
         <RoverSelect
           filterByRoverName={filterByRoverName}
