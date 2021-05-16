@@ -48,9 +48,22 @@
     width: 40px;
     border-radius: 3px;
     cursor: pointer;
+    z-index: 1;
   }
 
-  .btn-icon {
+  &__btn-left {
+    position: absolute;
+    top: 55px;
+    right: 100px;
+  }
+
+  &__btn-right {
+    position: absolute;
+    top: 55px;
+    left: 100px;
+  }
+
+  .photo__btn-icon {
     font-size: 36px;
   }
 
@@ -72,6 +85,46 @@
   &__img {
     border-radius: 20px;
     width: 400px;
+  }
+
+  &__buttons-row {
+    display: flex;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 50px;
+    width: 200px;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__btn-num {
+    border-radius: 5px;
+    height: 35px;
+    width: 40px;
+    transition: transform 0.3s;
+    background-color: rgb(13, 209, 134);
+    outline: none;
+    border: 1px solid #fff;
+
+    &:focus {
+      background-color: rgb(13, 147, 209);
+      transform: scale(1.1);
+      box-shadow: 0 10px 10px #ddd;
+      outline: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 10px 10px #ddd;
+    }
+  }
+
+  &__btn_active {
+    background-color: rgb(13, 147, 209);
+    transform: scale(1.1);
+    box-shadow: 0 10px 10px #ddd;
+    outline: none;
   }
 
   &__btn-load {

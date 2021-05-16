@@ -68,13 +68,13 @@ export const App = () => {
         />
       </div>
       <NasaPhoto
-          selectedRover={selectedRover}
-          selectedCamera={selectedCamera}
-          solRange={solRange}
-          setSelectedRover={setSelectedRover}
-          setSelectedCamera={setSelectedCamera}
-          setSolRange={setSolRange}
-        />
+        selectedRover={selectedRover}
+        selectedCamera={selectedCamera}
+        solRange={solRange}
+        setSelectedRover={setSelectedRover}
+        setSelectedCamera={setSelectedCamera}
+        setSolRange={setSolRange}
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { urls } from '../api/api';
 
@@ -10,6 +11,18 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 
 import './nasaPhoto.scss';
+import { number } from 'prop-types';
+
+// import { makeStyles } from '@material-ui/core/styles';
+// import { Pagination } from '@material-ui/lab';
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     '& > *': {
+//       marginTop: theme.spacing(2),
+//     },
+//   },
+// }));
 
 export const NasaPhoto = ({
   selectedRover,
@@ -19,12 +32,14 @@ export const NasaPhoto = ({
   setSelectedCamera,
   setSolRange,
 }) => {
-  const [photoData, setPhotoData] = useState([]);
-  const [offSet, setOffset] = useState(0);
-  const [photoLimit, setPhotoLimit] = useState(4);
-  // const [minPhotoLimit, setMinPhotoLimit] = useState(1);
-  // const [loading, setLoading] = useState(false);
+  // const classes = useStyles();
 
+  const [photoData, setPhotoData] = useState([]);
+  const [photoNumber, setPhotoNumber] = useState(1);
+  // const [offSet, setOffset] = useState(0);
+  // const [loading, setLoading] = useState(false);
+  // const [imgCount, setImgCount] = useState(0);
+  // const [buttons, setButtons] = useState([]);
 
   const { baseUrl, token } = urls;
   let rover = '';
@@ -39,33 +54,11 @@ export const NasaPhoto = ({
 
   const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}&${camera}&${token}`;
 
-  const reducer = (count, action) => {
-    switch (action.type) {
-      case 'increase':
-        return count + 1;
-
-      case 'decrease':
-        return count - 1;
-
-        case 'reset':
-          return count = 0;
-
-      default:
-        return count;
-    }
-  }
-
-  const [count, dispatch] = useReducer(reducer, 0);
-
-  const decrease = () => dispatch({ type: 'decrease'})
-  const increase = () => dispatch({ type: 'increase'})
-  const reset = () => dispatch({ type: 'reset'})
-
   const fetchPhoto = async() => {
     if (rover && camera) {
       const response = await fetch(totalUrl);
       const data = await response.json();
-      setPhotoData(data.photos);
+      setPhotoData([...data.photos]);
     }
 
     setSelectedRover({});
@@ -76,7 +69,79 @@ export const NasaPhoto = ({
 
   useEffect(() => {
     fetchPhoto();
+
+    return
   }, []);
+
+  const [buttonsLimit, setButtonsLimit] = useState(5);
+  const [maxButtonsLimit, setMaxButtonsLimit] = useState(5);
+  const [minButtonsLimit, setMinButtonsLimit] = useState(0);
+
+  const decrease = () => {
+    setPhotoNumber(prevValue => prevValue - 1);
+
+    if ((photoNumber) % buttonsLimit === 0) {
+      setMaxButtonsLimit(maxButtonsLimit - buttonsLimit);
+      setMinButtonsLimit(minButtonsLimit - buttonsLimit);
+    }
+  }
+
+  const increase = () => {
+    setPhotoNumber(prevValue => prevValue + 1);
+
+    if (photoNumber + 2 > maxButtonsLimit) {
+      setMaxButtonsLimit(maxButtonsLimit + buttonsLimit);
+      setMinButtonsLimit(minButtonsLimit + buttonsLimit);
+    }
+
+    // if (photoNumber + 1 === buttons[buttons.length -1]) {
+    //   setMaxButtonsLimit(minButtonsLimit + lastButtons);
+    //   setMinButtonsLimit(minButtonsLimit + buttonsLimit);
+    // }
+  }
+
+  const reset = () => {
+    setPhotoNumber(0)
+  }
+
+  const setImg = ({ target }) => {
+    console.log(target.name);
+    setPhotoNumber(prevValue => prevValue = Number(target.name) - 1);
+  };
+
+  const [buttonsPerPage, setButtonsPerPage] = useState(5)
+
+  const [buttons, setButtons] = useState([])
+  photoData.map((photo, index) => buttons.push(index + 1));
+  const currentButtons = buttons.slice(minButtonsLimit, maxButtonsLimit);
+  // const [currentButtonnss, setCurrentButtonnss] = useState(currentButtons);
+  const lastButtons = (buttons[buttons.length - 1]) % buttonsLimit;
+
+
+  // for (let i = 1; i <= Math.ceil(photoData.length / buttonsPerPage); i++) {
+  //   buttons.push(i);
+  // }
+
+  // const indexOfLastItem = photoNumber * buttonsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - buttonsPerPage;
+
+  // if ((photoNumber + 2) === buttons[buttons.length - 1]) {
+  //   setMaxButtonsLimit(maxButtonsLimit + lastButtons);
+  // }
+
+  console.log(photoNumber);
+  console.log(minButtonsLimit);
+  // console.log(maxButtonsLimit);
+  // console.log(minButtonsLimit + lastButtons);
+  // // console.log(buttons[buttons.length - 1]);
+  // console.log(lastButtons);
+  // console.log(maxButtonsLimit);
+  // console.log(currentButtons[currentButtons.length - 1]);
+
+  // console.log(minButtonsLimit);
+  // console.log(maxButtonsLimit);
+
+  //CHECKPOINT!!!
 
   return (
     <div className="photo">
@@ -94,18 +159,18 @@ export const NasaPhoto = ({
           <button
             type="button"
             onClick={decrease}
-            disabled={count === 0}
-            className="photo__btn"
+            disabled={photoNumber === 0}
+            className="photo__btn photo__btn-left"
           >
-            <ArrowLeftIcon className="btn-icon" />
+            <ArrowLeftIcon className="photo__btn-icon" />
           </button>
           <button
             type="button"
             onClick={increase}
-            disabled={count === photoData.length - 1}
-            className="photo__btn"
+            disabled={photoNumber === photoData.length - 1}
+            className="photo__btn photo__btn-right"
           >
-            <ArrowRightIcon className="btn-icon" />
+            <ArrowRightIcon className="photo__btn-icon" />
           </button>
         </div>
       {!photoData.length && (
@@ -115,23 +180,38 @@ export const NasaPhoto = ({
       )}
       {photoData.length > 1 && (
         <div className="photo__container">
+          <div className="photo__buttons-row">
+            {currentButtons.map(number => (
+            <button
+              className={classNames('photo__btn-num', {
+                photo__btn_active: photoNumber === number - 1,
+              })}
+              key={number}
+              variant="contained"
+              color="primary"
+              name={number}
+              onClick={(event) => {
+                setImg(event);
+                event.stopPropagation();
+              }}
+            >
+              {number}
+            </button>
+            ))}
+          </div>
           <h2 className="photo__title-count">
-            {`${count + 1} / ${photoData.length}`}
+            {`${photoNumber + 1} / ${photoData.length}`}
           </h2>
           <img
             className="photo__img"
-            src={(photoData[count]) && photoData[count].img_src}
+            src={(photoData[photoNumber]) && photoData[photoNumber].img_src}
             alt="rover photo"
           />
-          {/* <div class="photo__btn-load">
-            <Button
-              variant="contained"
-              color="primary"
-              // onClick={}
-            >
-              Load more
-            </Button>
-          </div> */}
+          {photoData[photoNumber] && (
+            <p className="photo__date">
+            {photoData[photoNumber].earth_date}
+          </p>
+          )}
         </div>
       )}
     </div>
