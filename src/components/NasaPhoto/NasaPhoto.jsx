@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable prefer-const */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-prototype-builtins */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -40,10 +42,7 @@ export const NasaPhoto = ({
   // eslint-disable-next-line max-len
   const totalUrl = `${baseUrl}/${rover}/photos?sol=${solRange}&camera=${camera}&${token}`;
 
-  // eslint-disable-next-line no-console
-  console.log(totalUrl);
-
-  const fetchPhoto = async() => {
+  const loadRoversInfo = async() => {
     if (rover && camera) {
       const response = await fetch(totalUrl);
       const data = await response.json();
@@ -57,29 +56,28 @@ export const NasaPhoto = ({
     reset();
   };
 
-  useEffect(() => {
-    fetchPhoto();
-  }, []);
-  // , setButtonsLimit
-  const [buttonsLimit] = useState(5);
-  const [maxButtonsLimit, setMaxButtonsLimit] = useState(5);
-  const [minButtonsLimit, setMinButtonsLimit] = useState(0);
+  // useEffect(() => {
+  // }, []);
+
+  const [buttonsNumberLimit, setButtonsNumberLimit] = useState(5);
+  const [maxButtonsNumberLimit, setMaxButtonsNumberLimit] = useState(5);
+  const [minButtonsNumberLimit, setMinButtonsNumberLimit] = useState(0);
 
   const decrease = () => {
     setPhotoNumber(prevValue => prevValue - 1);
 
-    if ((photoNumber) % buttonsLimit === 0) {
-      setMaxButtonsLimit(maxButtonsLimit - buttonsLimit);
-      setMinButtonsLimit(minButtonsLimit - buttonsLimit);
+    if ((photoNumber) % setButtonsNumberLimit === 0) {
+      setMaxButtonsNumberLimit(maxButtonsNumberLimit - buttonsNumberLimit);
+      setMinButtonsNumberLimit(minButtonsNumberLimit - buttonsNumberLimit);
     }
   };
 
   const increase = () => {
     setPhotoNumber(prevValue => prevValue + 1);
 
-    if (photoNumber + 2 > maxButtonsLimit) {
-      setMaxButtonsLimit(maxButtonsLimit + buttonsLimit);
-      setMinButtonsLimit(minButtonsLimit + buttonsLimit);
+    if (photoNumber + 1 > maxButtonsNumberLimit) {
+      setMaxButtonsNumberLimit(maxButtonsNumberLimit + buttonsNumberLimit);
+      setMinButtonsNumberLimit(minButtonsNumberLimit + buttonsNumberLimit);
     }
   };
 
@@ -92,33 +90,9 @@ export const NasaPhoto = ({
     setPhotoNumber(prevValue => prevValue = Number(target.name) - 1);
   }
 
-  const [currentButtons, setCurrentButton] = useState([]);
-
-  // eslint-disable-next-line no-unused-vars
-  const [buttons, setButtons] = useState([]);
+  const buttons = [];
 
   photoData.map((photo, index) => buttons.push(index + 1));
-
-  const paganationButton = () => {
-    setCurrentButton(buttons.slice(minButtonsLimit, maxButtonsLimit));
-  };
-
-  useMemo(() => {
-    paganationButton();
-  }, [photoNumber]);
-
-  // useEffect(() => {
-  //   paganationButton();
-  // }, [photoNumber]);
-
-  // const [currentButtonnss, setCurrentButtonnss] = useState(currentButtons);
-  // const lastButtons = (buttons[buttons.length - 1]) % buttonsLimit;
-
-  // console.log(currentButtons);
-  // console.log(photoNumber);
-  // console.log(minButtonsLimit);
-  // console.log(maxButtonsLimit);
-  // console.log(minButtonsLimit + lastButtons);
 
   return (
     <div className="photo">
@@ -126,7 +100,7 @@ export const NasaPhoto = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={fetchPhoto}
+          onClick={loadRoversInfo}
         >
           Download Photo
           <PhotoCamera />
@@ -159,24 +133,31 @@ export const NasaPhoto = ({
           </div>
           <div className="photo__container">
             <div className="photo__buttons-row">
-              {currentButtons.map(number => (
-                <button
-                  className={classNames('photo__btn-num', {
-                    photo__btn_active: photoNumber === number - 1,
-                  })}
-                  type="button"
-                  key={number}
-                  variant="contained"
-                  color="primary"
-                  name={number}
-                  onClick={(event) => {
-                    setImg(event);
-                    event.stopPropagation();
-                  }}
-                >
-                  {number}
-                </button>
-              ))}
+              {buttons.map((number) => {
+                if (number < maxButtonsNumberLimit + 1
+                  && number > minButtonsNumberLimit) {
+                  return (
+                    <button
+                      className={classNames('photo__btn-num', {
+                        photo__btn_active: photoNumber === number - 1,
+                      })}
+                      type="button"
+                      key={number}
+                      variant="contained"
+                      color="primary"
+                      name={number}
+                      onClick={(event) => {
+                        setImg(event);
+                        event.stopPropagation();
+                      }}
+                    >
+                      {number}
+                    </button>
+                  );
+                }
+
+                return null;
+              })}
             </div>
             <h2 className="photo__title-count">
               {`${photoNumber + 1} / ${photoData.length}`}
