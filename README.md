@@ -1,4 +1,6 @@
-# React Hooks, fetch
+# An application for viewing photos taken by NASA rovers
+
+React Hooks, fetch
 
 # Get the initial code
 1. Fork the repository
